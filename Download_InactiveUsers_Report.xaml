@@ -1,0 +1,286 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Sequence" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:usa="clr-namespace:UiPath.Salesforce.Activities;assembly=UiPath.Salesforce.Activities" xmlns:usc="clr-namespace:UiPath.Salesforce.ConnectionService;assembly=UiPath.Salesforce" xmlns:usl="clr-namespace:UiPathTeam.Salesforce.Lightning_Platform;assembly=UiPathTeam.Salesforce.Activities.Lightning_Platform" xmlns:usm="clr-namespace:UiPath.Salesforce.Models;assembly=UiPath.Salesforce" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_LogNotifications" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="out_InactiveUsersData" Type="OutArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1182,2567</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>UiPath.Salesforce.Activities.Models</x:String>
+      <x:String>UiPath.Salesforce.ConnectionService</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Salesforce.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Salesforce</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Download_InactiveUSers_Report" sap:VirtualizedContainerService.HintSize="955,2502" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_Report" />
+      <Variable x:TypeArguments="x:String" Name="str_SF_Username" />
+      <Variable x:TypeArguments="ss:SecureString" Name="str_Pwd" />
+      <Variable x:TypeArguments="x:String" Name="str_SF_Password" />
+      <Variable x:TypeArguments="x:Boolean" Name="bln_validconn" />
+      <Variable x:TypeArguments="ss:SecureString" Name="str_ConsumerSecret_" />
+      <Variable x:TypeArguments="x:String" Name="str_ConsumerSecret_Pwd" />
+      <Variable x:TypeArguments="ss:SecureString" Name="str_SecurityToken" />
+      <Variable x:TypeArguments="x:String" Name="str_MainResponse" />
+      <Variable x:TypeArguments="x:Boolean" Name="bln_ValidConn_Main" />
+      <Variable x:TypeArguments="x:String" Name="str_Main_Auth" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:Delete ContinueOnError="True" DisplayName="Delete - users file" sap:VirtualizedContainerService.HintSize="913,79" sap2010:WorkflowViewState.IdRef="Delete_1" Path="DeactivateUsers.xlsx" />
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-SFUD1" sap:VirtualizedContainerService.HintSize="913,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-SFUD1</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+        <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+        <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+        <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_config("DB_ConnectionString").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:RetryScope DisplayName="GEt Cred Retry Scope" sap:VirtualizedContainerService.HintSize="913,345" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+      <ui:RetryScope.ActivityBody>
+        <ActivityAction>
+          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="350,171" sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="[in_config(&quot;Salesforce_AdminCreds&quot;).ToString]" DisplayName="Get Credential" sap:VirtualizedContainerService.HintSize="308,79" sap2010:WorkflowViewState.IdRef="GetRobotCredential_1" Password="[str_Pwd]" Username="[str_SF_Username]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:RetryScope.ActivityBody>
+      <ui:RetryScope.Condition>
+        <ActivityFunc x:TypeArguments="x:Boolean" />
+      </ui:RetryScope.Condition>
+    </ui:RetryScope>
+    <Assign DisplayName="SecureStr to Str" sap:VirtualizedContainerService.HintSize="913,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[str_SF_Password]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[new System.Net.NetworkCredential(string.Empty, str_Pwd).Password]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <If Condition="[in_config(&quot;Run_Environment&quot;).tostring.ToLower=&quot;prod&quot;]" DisplayName="Check production" sap:VirtualizedContainerService.HintSize="913,413" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <usl:Salesforce_Application_Scope ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ExistingAuth="{x:Null}" ExistingService="{x:Null}" Host="{x:Null}" Password="{x:Null}" Port="{x:Null}" ProxyPass="{x:Null}" ProxyUser="{x:Null}" SecurityToken="{x:Null}" SecurityTokenProd="{x:Null}" TimeOut="{x:Null}" UserName="{x:Null}" sap2010:Annotation.AnnotationText="Connects to Salesforce Application using Consumer Key and User" Connection_Status="Close_at_scope_end" ConsumerKeyProd="[in_config(&quot;ConsumerKey&quot;).ToString]" ConsumerSecretProd="[(New System.Net.NetworkCredential(&quot;&quot;, in_Config(&quot;ConsumerSecret&quot;).ToString)).SecurePassword]" DisplayName="Salesforce Application Scope - prd" EnvironmentType="Production" sap:VirtualizedContainerService.HintSize="434,255" sap2010:WorkflowViewState.IdRef="Salesforce_Application_Scope_2" InvalidCommand="No" IsProduction="True" OverWriteServerType="False" PasswordProd="[(new System.Net.NetworkCredential(&quot;&quot;, str_SF_password)).SecurePassword]" ResponseAuth="[str_Main_Auth]" ResponseService="[str_MainResponse]" ServerType="Production" UserNameProd="[str_SF_Username]" ValidConnection="[bln_ValidConn_Main]">
+          <usl:Salesforce_Application_Scope.Body>
+            <ActivityAction x:TypeArguments="usl:SalesForceProperty">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="usl:SalesForceProperty" Name="SalesForceScope" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:String" Name="str_Response" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <usl:Execute_Report Result="{x:Null}" DataResult="[out_InactiveUsersData]" DisplayName="Execute Report - Inactive Users" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Execute_Report_2" InvalidCommand="No" ReportID="[in_config(&quot;Salesforce_Inactive_Users_Report_ID&quot;).ToString]" Response="[str_Response]" ValidConnection="[bln_validconn]" />
+              </Sequence>
+            </ActivityAction>
+          </usl:Salesforce_Application_Scope.Body>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </usl:Salesforce_Application_Scope>
+      </If.Then>
+      <If.Else>
+        <usl:Salesforce_Application_Scope ConsumerKeyProd="{x:Null}" ConsumerSecretProd="{x:Null}" ExistingAuth="{x:Null}" ExistingService="{x:Null}" Host="{x:Null}" IsProduction="{x:Null}" PasswordProd="{x:Null}" Port="{x:Null}" ProxyPass="{x:Null}" ProxyUser="{x:Null}" SecurityToken="{x:Null}" SecurityTokenProd="{x:Null}" TimeOut="{x:Null}" UserNameProd="{x:Null}" sap2010:Annotation.AnnotationText="Connects to Salesforce Application using Consumer Key and User" Connection_Status="Close_at_scope_end" ConsumerKey="[in_config(&quot;ConsumerKey&quot;).ToString]" ConsumerSecret="[in_config(&quot;ConsumerSecret&quot;).ToString]" DisplayName="Salesforce Application Scope - qa" EnvironmentType="Design_and_Test" sap:VirtualizedContainerService.HintSize="434,255" sap2010:WorkflowViewState.IdRef="Salesforce_Application_Scope_1" InvalidCommand="No" OverWriteServerType="False" Password="[str_SF_Password]" ResponseAuth="[str_Main_Auth]" ResponseService="[str_MainResponse]" ServerType="Sandbox" UserName="[str_SF_Username]" ValidConnection="[bln_ValidConn_Main]">
+          <usl:Salesforce_Application_Scope.Body>
+            <ActivityAction x:TypeArguments="usl:SalesForceProperty">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="usl:SalesForceProperty" Name="SalesForceScope" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:String" Name="str_Response" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <usl:Execute_Report Result="{x:Null}" DataResult="[out_InactiveUsersData]" DisplayName="Execute Report - Inactive Users" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Execute_Report_1" InvalidCommand="No" ReportID="[in_config(&quot;Salesforce_Inactive_Users_Report_ID&quot;).ToString]" Response="[str_Response]" ValidConnection="[bln_validconn]" />
+              </Sequence>
+            </ActivityAction>
+          </usl:Salesforce_Application_Scope.Body>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </usl:Salesforce_Application_Scope>
+      </If.Else>
+    </If>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="913,51" sap2010:WorkflowViewState.IdRef="CommentOut_5">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="304,449" sap2010:WorkflowViewState.IdRef="Sequence_9">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign DisplayName="Assign1" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ss:SecureString">[str_ConsumerSecret_]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ss:SecureString">[(New System.Net.NetworkCredential("", in_config("ConsumerSecret").ToString)).SecurePassword]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="SecureStr to Str - ConsumerSecret" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_ConsumerSecret_Pwd]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[new System.Net.NetworkCredential(string.Empty, str_ConsumerSecret_).Password]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="str to securestr" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ss:SecureString">[str_SecurityToken]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ss:SecureString">[(New System.Net.NetworkCredential("", in_config("SecurityToken").ToString)).SecurePassword]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <usa:SalesforceApplicationScope CustomServer="{x:Null}" ExistingConnectionService="{x:Null}" Port="{x:Null}" ProxyPassword="{x:Null}" ProxyServer="{x:Null}" ProxyUser="{x:Null}" SalesforceConnection="{x:Null}" ConsumerKey="[in_config(&quot;ConsumerKey&quot;).ToString]" ConsumerSecret="[str_ConsumerSecret_]" DisplayName="Salesforce Application Scope" sap:VirtualizedContainerService.HintSize="434,51" sap2010:WorkflowViewState.IdRef="SalesforceApplicationScope_1" Password="[str_Pwd]" ReportApiErrorAsException="False" SecurityToken="[str_SecurityToken]" ServerType="https://dolby--stage.lightning.force.com/" TelemetryEnabled="False" UseStrongDataTyping="False" Username="[str_SF_Username]">
+            <usa:SalesforceApplicationScope.Body>
+              <ActivityAction x:TypeArguments="usc:IConnectionService">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="usc:IConnectionService" Name="SalesforceConnection" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <usa:ExecuteReport SalesforceStatus="{x:Null}" DisplayName="Execute Report" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="ExecuteReport_1" ReportId="[in_config(&quot;Salesforce_Inactive_Users_Report_ID&quot;).ToString]" Result="[out_InactiveUsersData]" />
+                </Sequence>
+              </ActivityAction>
+            </usa:SalesforceApplicationScope.Body>
+            <usa:SalesforceApplicationScope.DesignSalesforceConnectionInfo>
+              <usm:SalesforceConnectionInfo CustomInstanceEndpoint="{x:Null}" ProxyPassword="{x:Null}" ProxyPort="{x:Null}" ProxyServer="{x:Null}" ProxyUser="{x:Null}" SecurityToken="{x:Null}" ConsumerKey="3MVG967gVD5fuTmIL52hsmGUIazeXO5WwNPRVpH3Rd.IchxZEOLRWC7Jmy7StoR9oFGcikIbH2GkTifXFf_MI" EncryptedConsumerSecret="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAw9kTkNYgVk2i0m9sV8GnygAAAAACAAAAAAADZgAAwAAAABAAAADmN86w4WRfIADlF1CvCKbhAAAAAASAAACgAAAAEAAAAKTPDaYfJKtFyaDbquqvIUdIAAAAnDjqPgPgjqcBVZgVS5jum1AtgJoHmAjSblpzMXiFl8/d3irPHqbTzGj8HtB4BNQUFm8IXCtmcYWUDACGmx8ccrrt2SMKAoFGFAAAAMLaY2A7maJuPin53T9Ky9jtShtk" EncryptedProxyUserPassword="" EncryptedSecurityToken="" ServerInstance="Test" UserName="admin@dolby.com.stage">
+                <usm:SalesforceConnectionInfo.ConsumerSecret>
+                  <ss:SecureString />
+                </usm:SalesforceConnectionInfo.ConsumerSecret>
+                <usm:SalesforceConnectionInfo.Password>
+                  <ss:SecureString />
+                </usm:SalesforceConnectionInfo.Password>
+              </usm:SalesforceConnectionInfo>
+            </usa:SalesforceApplicationScope.DesignSalesforceConnectionInfo>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </usa:SalesforceApplicationScope>
+        </Sequence>
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-SFUD2" sap:VirtualizedContainerService.HintSize="913,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-SFUD2</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+        <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+        <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+        <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_config("DB_ConnectionString").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="913,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Salesforce Connection: &quot;+bln_ValidConn_Main.ToString+&quot; Response:&quot;+str_MainResponse+&quot; Auth:&quot;+str_Main_Auth]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="913,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;User Count to be deactivated: &quot;+out_InactiveUsersData.Rows.Count.ToString]" />
+    <If Condition="[out_InactiveUsersData.Rows.Count=0]" DisplayName="Check row Count - from report" sap:VirtualizedContainerService.HintSize="913,247" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Throw DisplayName="Throw - no users to be deactivated" Exception="[new Exception(&quot;No users from the Inactive users report to perform deactivation process.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+      </If.Then>
+    </If>
+    <ui:KillProcess Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="913,132" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="EXCEL" />
+    <ui:WriteRange AddHeaders="True" DataTable="[out_InactiveUsersData]" DisplayName="Write Range 1" sap:VirtualizedContainerService.HintSize="913,115" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Sheet1" StartingCell="A1" WorkbookPath="DeactivateUsers.xlsx" />
+    <ui:KillProcess Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="913,132" sap2010:WorkflowViewState.IdRef="KillProcess_2" ProcessName="EXCEL" />
+  </Sequence>
+</Activity>
